@@ -28,6 +28,10 @@ contract Players{
          require(msg.sender == _address);
          _;
       }
+      modifier beYourSelfViaAddress (address _ad){
+         require(msg.sender == _ad);
+         _;
+      }
     constructor () public payable { 
          chairperson= payable(msg.sender);
          
@@ -50,7 +54,7 @@ contract Players{
         players[ad].services.push(s);
         console.log("Address ", ad, " registred the service called ", s.name);
      }
-     function register_service_by_ad(service memory s, address from) onlyMember public{
+     function register_service_by_ad(service memory s, address from) onlyMember beYourSelfViaAddress(from) public{
         players[from].services.push(s);
         console.log("Address ", from, " registred the service called ", s.name);
      }
