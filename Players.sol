@@ -6,6 +6,7 @@ contract Players{
      address payable chairperson;
       mapping (address=>player) public players;
       mapping (string=>address payable) public playerToAdress;
+      mapping(address =>uint) member;
       struct player{ 
         uint balance; // deposit for payment settlement
         string name;
@@ -18,7 +19,15 @@ contract Players{
             uint price;
         }
 
-      string testString;
+      modifier onlyMember{ 
+         require(member[msg.sender]==1);
+            _;
+      }
+      modifier beYourSelf (string memory _name){
+         address payable _address = playerToAdress[_name];
+         require(msg.sender == _address);
+         _;
+      }
     constructor () public payable { 
          chairperson= payable(msg.sender);
          
@@ -34,25 +43,26 @@ contract Players{
         
         players[newPlayer].balance = msg.sender.balance;
         playerToAdress[name] = newPlayer;
+        member[newPlayer] = 1;
      }
-     function register_service(service memory s, string memory playerName) public{
+     function register_service(service memory s, string memory playerName) onlyMember beYourSelf(playerName) public{
         address ad = playerToAdress[playerName];
         players[ad].services.push(s);
         console.log("Address ", ad, " registred the service called ", s.name);
      }
-     function register_service_by_ad(service memory s, address from) public{
+     function register_service_by_ad(service memory s, address from) onlyMember public{
         players[from].services.push(s);
         console.log("Address ", from, " registred the service called ", s.name);
      }
 
-     function sendMoney(address payable toAddress) payable public {
+     function sendMoney(address payable toAddress) onlyMember payable public {
          address fromAddress=msg.sender;
          uint amt = msg.value;
          players[toAddress].balance = players[toAddress].balance + amt;
          players[fromAddress].balance = players[fromAddress].balance - amt;
          toAddress.transfer(amt); 
      }
-     function sendMoney(string memory toName) payable public {
+     function sendMoney(string memory toName) onlyMember payable public {
         uint amt = msg.value;
         address payable toAddress = playerToAdress[toName];
          address fromAddress=msg.sender;
