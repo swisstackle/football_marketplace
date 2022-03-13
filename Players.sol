@@ -29,9 +29,14 @@ contract Players{
         // chairperson.transfer(msg.value);
          console.log("System has been initiated with chairperson: ", chairperson, " with balance ", msg.sender.balance);
         }
-     function register (address payable newPlayer) public payable{ 
-        players[newPlayer] = msg.sender.balance;
-        member[newPlayer] = 1;
+     function register () public payable{ 
+        address payable ad = payable(msg.sender);
+        players[ad] = msg.sender.balance;
+        member[ad] = 1;
+     }
+     function unRegister() public payable{
+         address payable ad = payable(msg.sender);
+         member[ad] = 0;
      }
    //   function register_service(service memory s, string memory playerName) onlyMember beYourSelf(playerName) public{
    //      address ad = playerToAdress[playerName];
@@ -68,6 +73,10 @@ contract Players{
    //       players[fromAddress].balance = players[fromAddress].balance - amt;
    //       toAddress.transfer(amt); 
    //   }
+
+   function isRegistered (address a) public view returns(bool){
+         return (member[a] == 1);
+   }
 
     function print(address a) public view {
         uint p = players[a];
