@@ -71,6 +71,19 @@ const getServices = async ()=>{
     return results.rows;
 }
 
+const getUsername = async (address)=>{
+    let results = await client.query('SELECT name FROM users WHERE address=$1',[address]);
+    if(results.rows.length == 0){
+        results = await client.query('SELECT name FROM coaches WHERE address=$1',[address]);
+    }
+    if(results.rows.length == 0){
+        return "Failed";
+    }
+
+    return results.rows;
+
+}
+
         const registerCoach = (address, name)=>{
             client.query('INSERT INTO coaches(address, name) VALUES($1, $2)',[address, name],(error) =>{
                 if(error){
@@ -111,7 +124,8 @@ module.exports = {
     registerCoach,
     getServices,
     deleteServiceRequest,
-    deleteService
+    deleteService,
+    getUsername
 }
 
 

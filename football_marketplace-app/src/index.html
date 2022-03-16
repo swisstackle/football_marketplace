@@ -3,44 +3,60 @@
 <head>
     <title>Register information at Blockchain</title>
 
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <!-- <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>-->
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+    <script src='./css/bootstrap/dist/js/bootstrap.bundle.min.js' ></script>
+    <script src='./css/bootstrap/dist/js/bootstrap.min.js'></script>
+    <link href='./css/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+
     <script src="./js/dist/web3.min.js"></script>
-    <script src="js/app.js"></script>
-</head>
+     <script src="js/app.js"></script>
 
-<body class="container">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ </head>
 
-<h1 class="page-header">Register new user, register new service, unregister service, show services and username</h1>
+ <body class="container-fluid" id ="main">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+     <button id="navbutton" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="navbar-collapse collapse" id="navbarTogglerDemo01">
+         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+             <li class="nav-item active">
+                 <a class="nav-link" href="#home">Home</span></a>
+             </li>
+             <li class="nav-item active">
+                 <a class="nav-link" href="wallet.html">Wallet</span></a>
+             </li>
+         </ul>
+     </div>
+ </nav>
+<div id ="oldsite">
 
 
-<!--<form action="http://www.foo.com" method="GET">-->
-<!--    <div>-->
-<!--        <label for="say">What greeting do you want to say?</label>-->
-<!--        <input name="say" id="say" value="Hi">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <label for="to">Who do you want to say it to?</label>-->
-<!--        <input name="to" id="to" value="Mom">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <button>Send my greetings</button>-->
-<!--    </div>-->
-<!--</form>-->
 
-<!--<form action="http://localhost:3300/registeruser" method="GET">-->
 
-<!--    <div>-->
-<!--        <label for="to">Who do you want to say it to?</label>-->
-<!--        <input name="username" id="username" value="Mom">-->
-<!--    </div>-->
-<!--    <div>-->
-<!--        <button>Send my greetings</button>-->
-<!--    </div>-->
-<!--</form>-->
+ <div class="row">
+    <div class="col">
+        <h3 class="sub-header">Register Player</h3>
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <table>
+                    <tr>
+                        <td><label for="username">Username:</label> </td>
+                        <td>
+                            <input class="form-control" id="username" name="username">
+                        </td>
+                    </tr>
 
-<div class="row">
-    <div>
+                </table>
+            </div>
+
+            <a href="#" onclick="registerPlayer()" class="btn btn-primary">Register</a>
+        </form>
+    </div>
+    <div class="col">
         <h3 class="sub-header">Register Player</h3>
         <form class="form-inline" role="form">
             <div class="form-group">
@@ -60,7 +76,7 @@
     </div>
 </div>
 <div class="row">
-    <div>
+    <div class="col-xs-6 column1">
         <h3 class="sub-header">Register Coach</h3>
         <form class="form-inline" role="form">
             <div class="form-group">
@@ -82,10 +98,10 @@
 
 
 <div class="row">
-    <div>
+    <div class="col-xs-6 column1">
         <h3 class="sub-header">IsRegistred</h3>
         <form class="form-inline" role="form">
-            <a href="#" onclick="verifyClient()" class="btn btn-primary">isRegistred</a>
+            <a href="#" onclick="changeHeader()" class="btn btn-primary">isRegistred</a>
             <div class="form-group">
                 <table>
                     <tr>
@@ -100,7 +116,7 @@
     </div>
 </div>
 <div class="row">
-    <div>
+    <div class="col-xs-6 column1">
         <h3 class="sub-header">Unregister yourself</h3>
         <form class="form-inline" role="form">
             <a href="#" onclick="unRegister()" class="btn btn-primary">unregister</a>
@@ -119,7 +135,7 @@
 </div>
 
 <div class="row">
-    <div>
+    <div class="col-xs-6 column1">
         <h3 class="sub-header">Request to create a service</h3>
         <form class="form-inline" role="form">
             <a href="#" onclick="requestRegisterService()" class="btn btn-primary">Request</a>
@@ -144,7 +160,7 @@
 </div>
 
 <div class="row">
-    <div>
+    <div class="col-xs-6 column1">
         <h3 class="sub-header">Submit all services (only possible as a coach)</h3>
         <form class="form-inline" role="form">
 
@@ -154,7 +170,7 @@
 </div>
 
 <div class="row">
-    <div>
+    <div class="col-xs-6 column1">
         <h3 class="sub-header">Delete service</h3>
         <form class="form-inline" role="form">
             <div class="form-group">
@@ -173,5 +189,8 @@
         </form>
     </div>
 </div>
+
+</div>
+
 </body>
 </html>

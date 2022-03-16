@@ -8,6 +8,7 @@ if (window.ethereum) {
         accounts = web3.eth.requestAccounts().then(function(accounts) {
             console.log(accounts[0]);
             account = accounts[0];
+            changeHeader();
         });
 
     } catch (error) {
@@ -21,6 +22,7 @@ else {
     window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
 }
 console.log (window.web3.currentProvider);
+
 
 var contractAddress = '0x1366392C4716aC84AC7FC47A83bDa659039E4D37';
 var abi = JSON.parse('[\n' +
@@ -153,10 +155,9 @@ var abi = JSON.parse('[\n' +
 );
 
 contract = new web3.eth.Contract(abi, contractAddress);
-
-
 //Smart contract functions
 function registerPlayer() {
+
     console.log(document.getElementById('username').value);
 
 
@@ -263,8 +264,7 @@ function submitService(){
 
 function verifyClient() {
     contract.methods.isRegistered(account).call().then( function( isReg ) {
-        console.log("User is registred: ", isReg);
-        //document.getElementById('lastInfo').innerHTML = info;
+        alert(account);
     });
 }
 
@@ -303,3 +303,56 @@ function deleteService(){
             console.log("Player with address ",account, " deleted a service.");
 
 }
+
+
+function getCurentFileName(){
+    var pagePathName= window.location.pathname;
+    return pagePathName.substring(pagePathName.lastIndexOf("/") + 1);
+}
+
+async function changeHeader(){
+    let filename =getCurentFileName();
+
+    switch(filename){
+        case "wallet.html":
+            //$("#header1").text("Welcome back "+account);
+            $.get( "getusername", { address: account } )
+                .done(function( data ) {
+                    $("#header1").text("Wallet of "+data);
+                });
+            let balance = await getBalance();
+            $("#balanceText").text("Your current balance is "+ balance);
+            break;
+        case "index.html":
+            break;
+        case "service.html":
+
+            break;
+        case "register.html":
+
+            break;
+        case "myofferings.html":
+
+            break;
+        default:
+
+    }
+
+}
+
+async function getBalance(){
+    return await web3.eth.getBalance(account).then(result => web3.utils.fromWei(result,"ether"));
+}
+
+
+$(document).ready(function () {
+    $(document).click(function () {
+        // if($(".navbar-collapse").hasClass("in")){
+        $('.navbar-collapse').collapse('hide');
+        // }
+    });
+});
+
+
+
+

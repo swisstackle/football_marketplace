@@ -56,3 +56,9 @@ app.get('/registercoach', function(req, res){
     db.registerCoach(req.query.address, req.query.username);
     res.send("Success");
 });
+
+app.get('/getusername', async function(req, res){
+    console.log(req.query.address);
+    let rows = await db.getUsername(req.query.address);
+    res.send(rows[0]['name']);
+});
