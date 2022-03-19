@@ -1,3 +1,4 @@
+
 var accounts;
 var account;
 
@@ -23,8 +24,6 @@ else {
 }
 console.log (window.web3.currentProvider);
 
-
-var contractAddress = '0x1366392C4716aC84AC7FC47A83bDa659039E4D37';
 var abi = JSON.parse('[\n' +
     '\t{\n' +
     '\t\t"inputs": [],\n' +
@@ -154,12 +153,23 @@ var abi = JSON.parse('[\n' +
     ']'
 );
 
-contract = new web3.eth.Contract(abi, contractAddress);
+
+    $.get( "getcontractaddress")
+        .done( function( data ) {
+            startContract(data);
+        });
+function startContract(_contractAddress){
+    contract = new web3.eth.Contract(abi, _contractAddress);
+    console.log("Read the contractaddress: "+_contractAddress);
+}
+
+
+
+
 //Smart contract functions
 function registerPlayer() {
 
     console.log(document.getElementById('username').value);
-
 
     contract.methods.register ().send( {from: account}).then(function(receipt){
         console.log(document.getElementById('username').value);

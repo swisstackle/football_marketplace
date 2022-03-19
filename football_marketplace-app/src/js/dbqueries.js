@@ -1,15 +1,17 @@
 const {Client} = require("pg");
+require('dotenv').config();
     var client;
 
-
+console.log(process.env.HOST+" is the content of the env variable\n");
      async function connect(){
-
         const {Client} = require('pg');
+         console.log(process.env.HOST+" is the content of the env variable\n");
         client = new Client({
-            host: 'localhost',
-            port: 5432,
-            user: 'postgres',
-            password: '1546',
+            host: process.env.HOST,
+            port: process.env.PORT,
+            user: process.env.USER,
+            password: process.env.PASSWORD,
+            database: process.env.MYDATABASE
         });
 
         await client.connect();
@@ -48,6 +50,7 @@ const {Client} = require("pg");
                  throw error;
              }
          })
+         console.log("User "+address+" got deleted\n");
      }
 
      const dbRequestRegisterService = (address, name, description)=>{

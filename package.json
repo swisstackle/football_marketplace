@@ -1,0 +1,22 @@
+{
+  "name": "football_marketplace-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "football_marketplace-app/index.js",
+  "scripts": {
+    	"test": "echo \"Error: no test specified\" && exit 1",
+	"start": "cd football_marketplace-app && npm start",
+	"install": "npm install -g truffle && cd football_marketplace-app && npm install",
+	"migrate" : "truffle migrate --network=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swisstackle/football_marketplace.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/swisstackle/football_marketplace/issues"
+  },
+  "homepage": "https://github.com/swisstackle/football_marketplace#readme"
+}

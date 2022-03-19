@@ -1,0 +1,17 @@
+version: "2.3.3"
+
+services:
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: 1546
+      POSTGRES_DB: marketplace
+      POSTGRES_USER: postgres
+    build:
+      dockerfile: ../db/Dockerfile
+  football_marketplace:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 3300:3300
+    depends_on:
+      - "postgres"

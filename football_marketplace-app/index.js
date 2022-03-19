@@ -1,4 +1,5 @@
 const db = require('./src/js/dbqueries');
+const fs = require('fs');
 const connector = db.connectV();
 
 
@@ -61,4 +62,9 @@ app.get('/getusername', async function(req, res){
     console.log(req.query.address);
     let rows = await db.getUsername(req.query.address);
     res.send(rows[0]['name']);
+});
+app.get('/getcontractaddress', function(req, res){
+    let addy = fs.readFileSync("address.txt");
+    console.log("The addy is "+addy);
+    res.send(addy);
 });
