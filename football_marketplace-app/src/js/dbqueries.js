@@ -2,10 +2,14 @@ const {Client} = require("pg");
 require('dotenv').config();
     var client;
 
-console.log(process.env.HOST+" is the content of the env variable\n");
      async function connect(){
         const {Client} = require('pg');
-         console.log(process.env.HOST+" is the content of the env variable\n");
+         console.log("Database connection started with:");
+         console.log("Host: "+process.env.HOST);
+         console.log("User: "+process.env.USER);
+         console.log("Port: "+process.env.PORT);
+         console.log("Password: "+process.env.PASSWORD);
+         console.log("Database: "+process.env.MYDATABASE);
         client = new Client({
             host: process.env.HOST,
             port: process.env.PORT,
@@ -74,6 +78,12 @@ const getServices = async ()=>{
     return results.rows;
 }
 
+const getAdmittedServices = async (address)=>{
+    const results = await client.query('SELECT * FROM services WHERE address=$1',[address]);
+
+    return results.rows;
+}
+
 const getUsername = async (address)=>{
     let results = await client.query('SELECT name FROM users WHERE address=$1',[address]);
     if(results.rows.length == 0){
@@ -128,7 +138,8 @@ module.exports = {
     getServices,
     deleteServiceRequest,
     deleteService,
-    getUsername
+    getUsername,
+    getAdmittedServices
 }
 
 

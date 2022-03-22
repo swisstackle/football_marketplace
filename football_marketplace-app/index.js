@@ -12,9 +12,9 @@ app.use(express.static('src'));
 app.listen('3300', function () {
     console.log('CORS-enabled web server listening on port 3300')
 });
-app.get('/', function (req, res) {
-    res.render('index.html');
-});
+// app.get('/', function (req, res) {
+//     res.render('index.html');
+// });
 
 app.get('/registeruser', function(req, res){
     console.log(req.query.username);
@@ -42,6 +42,13 @@ app.get('/submitservice', async function(req, res){
         db.submitService(r['address'],r['service_name'],r['service_description']);
     }
     res.send("Success");
+});
+
+app.get('/getAdmittedServices', async function(req, res){
+    console.log(req.query.address);
+    const results = await db.getAdmittedServices(req.query.address);
+
+    res.send(results);
 });
 
 app.get('/deleteservice', function(req, res){
