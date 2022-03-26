@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './Footer';
 import Video from "./Video";
 import Store from "./Store";
+import RequestRegisterService from "./RequestRegisterService";
 
 
 import {
@@ -191,7 +192,6 @@ function App() {
         const web3 = new Web3(Web3.givenProvider || 'http://http://localhost:7545');
         setWeb3Obj(web3);
         const accounts = await web3.eth.requestAccounts();
-        console.log(accounts[0] + " is the account");
         setAccount(accounts[0]);
        $.get( "getcontractaddress")
           .done(  function( data ) {
@@ -199,7 +199,6 @@ function App() {
 
               const _contract = new web3.eth.Contract(abi, data);
               _contract.address = data;
-              console.log(_contract.address + " is the contract");
               setContract(_contract);
 
 
@@ -221,6 +220,7 @@ function App() {
               <Route path='myservices' element={<MyServicesDom contract={contract} account={account} web3Obj={web3Obj}/>}/>
               <Route path='coaches' element={<CoachesBackendDom contract={contract} account={account} web3Obj={web3Obj}/>}/>
               <Route path='store' element={<Store contract={contract} account={account} web3Obj={web3Obj}/>}/>
+              <Route path='createservice' element={<RequestRegisterService contract={contract} account={account} web3Obj={web3Obj}/>}/>
               <Route path='home' element={<HomeDom/>}/>
               <Route path='' element={<HomeDom/>}/>
           </Routes>
@@ -275,7 +275,6 @@ const CoachesBackendDom = (props)=>{
 
             const coach = await props.contract.methods.isCoachView(props.account).call();
             setIsCoach(coach);
-            console.log(coach+' is isCoach');
 
         }
         load();
@@ -288,7 +287,6 @@ const CoachesBackendDomInternal=(props)=>{
         async function load(){
             const _requests = await getServiceRequests();
 
-            console.log('servide desc'+_requests[0]['service_description']);
             const listItems = _requests.map((service) =>
                 <li>{service['service_name'] + ' ' + service['service_description'] + ': '} {<a href={"#"} onClick={() => admitService(service['address'],service['service_name'] , service['service_description'], service['price'])} className={"btn btn-primary"}>Admit</a>}</li>
 
@@ -299,7 +297,6 @@ const CoachesBackendDomInternal=(props)=>{
     },[]);
 
     const isCoach = props.isCoach;
-    console.log(isCoach);
     if(isCoach){
         return(<Stack className="align-items-center">
             <h3 className="display-3">Admit Services</h3>
@@ -347,9 +344,7 @@ const RegisterFormDom = (props)=>{
     useEffect(()=>{
 
         async function load(){
-            console.log(props.contract);
             const isReg = await props.contract.methods.isRegistered(props.account).call();
-            console.log(isReg);
             setIsRegistered(isReg);
         }
         load();
@@ -409,7 +404,6 @@ const WalletDom = (props)=>{
         async function load(){
 
             const isReg = await _contract.methods.isRegistered(_account).call();
-            console.log(isReg);
             setIsRegistred(isReg);
         }
         load();
@@ -426,13 +420,11 @@ const WalletDomInternal = (props)=>{
     useEffect(()=>{
         async function load(){
             const balance = await getBalance(props.contract, props.account, props.web3Obj);
-            console.log(balance);
             setBalance(balance);
         }
         load();
     },[]);
     if(props.registered){
-        console.log("He is registered");
 
 
 return(<Row >
@@ -499,7 +491,6 @@ function registerPlayer(contract, account) {
 
 
   contract.methods.register ().send( {from: account}).then(function(receipt){
-    console.log(document.getElementById('username').value);
     if(receipt){
         alert('Executing with '+document.getElementById('username').value+' and '+account);
       const Http = new XMLHttpRequest();
@@ -508,11 +499,8 @@ function registerPlayer(contract, account) {
       Http.send();
 
       Http.onreadystatechange = (e) => {
-        console.log(Http.responseText)
       }
-      console.log("Player with address ",account, " got registred.");
     }else{
-      console.log("Registration failed.");
     }
 
   });
@@ -521,11 +509,9 @@ function registerPlayer(contract, account) {
 
 function registerCoach(contract, account) {
 
-  console.log('blabla '+document.getElementById('cname').value);
 
 
   contract.methods.registerCoach ().send( {from: account}).then(function(receipt){
-    console.log('blabla2 '+document.getElementById('cname').value);
     if(receipt){
 
 
@@ -535,18 +521,15 @@ function registerCoach(contract, account) {
       Http.send();
 
       Http.onreadystatechange = (e) => {
-        console.log(Http.responseText)
       }
-      console.log("Coach with address ",account, " got registred.");
     }else{
-      console.log("Registration failed.");
     }
 
   });
 }
 //
 //
-function requestRegisterService(contract, account){
+export function requestRegisterService(contract, account){
 
   contract.methods.isRegistered(account).call().then( function( isReg ) {
     if(!isReg){
@@ -558,8 +541,15 @@ function requestRegisterService(contract, account){
     Http.open("GET", url);
     Http.send();
 
+
     Http.onreadystatechange = (e) => {
-      console.log(Http.responseText)
+           console.log(Http.responseText);
+           if( Http.responseText == "Success"){
+               $('#servicename').val('');
+               $('#servicedescription').val('');
+               $('#price').val('');
+               alert("Successfully created service.")
+           }
     }
 
   });
@@ -568,7 +558,6 @@ function requestRegisterService(contract, account){
 function submitService(contract, account){
 
   contract.methods.isRegistered(account).call().then( function( isReg ) { // check if the address is registred first
-    console.log("User is registred: ", isReg);
     //document.getElementById('lastInfo').innerHTML = info;
     if(!isReg){
       alert("You are not registred, you can't submit a service.");
@@ -582,12 +571,9 @@ function submitService(contract, account){
         Http.send();
 
         Http.onreadystatechange = (e) => {
-          console.log(Http.responseText)
         }
 
-        console.log("Player with address ",account, " submitted all services.");
       }else{
-        console.log("Submition of services failed.");
       }
 
     });
@@ -632,7 +618,6 @@ function submitService(contract, account){
 //   Http.onreadystatechange = (e) => {
 //     console.log(Http.responseText)
 //   }
-//   console.log("Player with address ",account, " deleted a service.");
 //
 // }
 //
@@ -650,9 +635,7 @@ export function buy_service(contract, account, web3Obj, addressTo, servicename, 
         if(receipt){
             await $.get('http://localhost:3300/buyservice?servicename='+servicename+ '&address='+account)
 
-            //console.log("Player with address ",account, " got registred.");
         }else{
-            console.log("Buying service failed.");
         }
 
     });

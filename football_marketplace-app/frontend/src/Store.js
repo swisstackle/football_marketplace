@@ -17,7 +17,7 @@ const Store = (props) => {
             setIsRegistred(isReg);
         }
         load();
-    },[])
+    },[]);
 
 
     return(

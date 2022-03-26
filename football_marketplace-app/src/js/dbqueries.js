@@ -77,7 +77,7 @@ require('dotenv').config();
              if(error){
                  throw error;
              }
-         })
+         });
      }
 
     const submitService = (address, name, description, price)=>{
@@ -85,7 +85,7 @@ require('dotenv').config();
         if(error){
             throw error;
         }
-    })
+    });
      }
 
 const getServices = async ()=>{
