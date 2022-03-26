@@ -4,156 +4,181 @@ import * as $ from 'jquery';
 import Web3 from 'web3';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './Footer';
-// import './sketchy.min.css';
+import Video from "./Video";
+import Store from "./Store";
 
-import { Navbar, Nav, Container, NavDropdown, Form,FormControl, Button, Row, Col, PageHeader } from 'react-bootstrap';
+
+import {
+    Navbar,
+    Nav,
+    Container,
+    NavDropdown,
+    Form,
+    FormControl,
+    Button,
+    Row,
+    Col,
+    Stack,
+    PageHeader,
+    Card
+} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 
-var abi = JSON.parse('[\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"stateMutability": "payable",\n' +
-    '\t\t"type": "constructor"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "editService",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "nonpayable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [\n' +
-    '\t\t\t{\n' +
-    '\t\t\t\t"internalType": "address",\n' +
-    '\t\t\t\t"name": "a",\n' +
-    '\t\t\t\t"type": "address"\n' +
-    '\t\t\t}\n' +
-    '\t\t],\n' +
-    '\t\t"name": "isRegistered",\n' +
-    '\t\t"outputs": [\n' +
-    '\t\t\t{\n' +
-    '\t\t\t\t"internalType": "bool",\n' +
-    '\t\t\t\t"name": "",\n' +
-    '\t\t\t\t"type": "bool"\n' +
-    '\t\t\t}\n' +
-    '\t\t],\n' +
-    '\t\t"stateMutability": "view",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [\n' +
-    '\t\t\t{\n' +
-    '\t\t\t\t"internalType": "address",\n' +
-    '\t\t\t\t"name": "",\n' +
-    '\t\t\t\t"type": "address"\n' +
-    '\t\t\t}\n' +
-    '\t\t],\n' +
-    '\t\t"name": "players",\n' +
-    '\t\t"outputs": [\n' +
-    '\t\t\t{\n' +
-    '\t\t\t\t"internalType": "uint256",\n' +
-    '\t\t\t\t"name": "",\n' +
-    '\t\t\t\t"type": "uint256"\n' +
-    '\t\t\t}\n' +
-    '\t\t],\n' +
-    '\t\t"stateMutability": "view",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [\n' +
-    '\t\t\t{\n' +
-    '\t\t\t\t"internalType": "address",\n' +
-    '\t\t\t\t"name": "a",\n' +
-    '\t\t\t\t"type": "address"\n' +
-    '\t\t\t}\n' +
-    '\t\t],\n' +
-    '\t\t"name": "print",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "view",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "rateService",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "nonpayable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "register",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "payable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "registerCoach",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "payable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "register_service",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "nonpayable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [\n' +
-    '\t\t\t{\n' +
-    '\t\t\t\t"internalType": "address payable",\n' +
-    '\t\t\t\t"name": "toAddress",\n' +
-    '\t\t\t\t"type": "address"\n' +
-    '\t\t\t}\n' +
-    '\t\t],\n' +
-    '\t\t"name": "sendMoney",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "payable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "submit_service",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "nonpayable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "unRegister",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "payable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t},\n' +
-    '\t{\n' +
-    '\t\t"inputs": [],\n' +
-    '\t\t"name": "unRegisterService",\n' +
-    '\t\t"outputs": [],\n' +
-    '\t\t"stateMutability": "nonpayable",\n' +
-    '\t\t"type": "function"\n' +
-    '\t}\n' +
-    ']'
+var abi = JSON.parse('[{\n' +
+    '      "inputs": [],\n' +
+    '      "stateMutability": "payable",\n' +
+    '      "type": "constructor",\n' +
+    '      "payable": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [\n' +
+    '        {\n' +
+    '          "internalType": "address",\n' +
+    '          "name": "",\n' +
+    '          "type": "address"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "name": "players",\n' +
+    '      "outputs": [\n' +
+    '        {\n' +
+    '          "internalType": "uint256",\n' +
+    '          "name": "",\n' +
+    '          "type": "uint256"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "stateMutability": "view",\n' +
+    '      "type": "function",\n' +
+    '      "constant": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "register",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "payable",\n' +
+    '      "type": "function",\n' +
+    '      "payable": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "registerCoach",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "payable",\n' +
+    '      "type": "function",\n' +
+    '      "payable": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "unRegister",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "payable",\n' +
+    '      "type": "function",\n' +
+    '      "payable": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "register_service",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "nonpayable",\n' +
+    '      "type": "function"\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "submit_service",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "nonpayable",\n' +
+    '      "type": "function"\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "unRegisterService",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "nonpayable",\n' +
+    '      "type": "function"\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "editService",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "nonpayable",\n' +
+    '      "type": "function"\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [],\n' +
+    '      "name": "rateService",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "nonpayable",\n' +
+    '      "type": "function"\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [\n' +
+    '        {\n' +
+    '          "internalType": "address payable",\n' +
+    '          "name": "toAddress",\n' +
+    '          "type": "address"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "name": "sendMoney",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "payable",\n' +
+    '      "type": "function",\n' +
+    '      "payable": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [\n' +
+    '        {\n' +
+    '          "internalType": "address",\n' +
+    '          "name": "a",\n' +
+    '          "type": "address"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "name": "isRegistered",\n' +
+    '      "outputs": [\n' +
+    '        {\n' +
+    '          "internalType": "bool",\n' +
+    '          "name": "",\n' +
+    '          "type": "bool"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "stateMutability": "view",\n' +
+    '      "type": "function",\n' +
+    '      "constant": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [\n' +
+    '        {\n' +
+    '          "internalType": "address",\n' +
+    '          "name": "a",\n' +
+    '          "type": "address"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "name": "isCoachView",\n' +
+    '      "outputs": [\n' +
+    '        {\n' +
+    '          "internalType": "bool",\n' +
+    '          "name": "",\n' +
+    '          "type": "bool"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "stateMutability": "view",\n' +
+    '      "type": "function",\n' +
+    '      "constant": true\n' +
+    '    },\n' +
+    '    {\n' +
+    '      "inputs": [\n' +
+    '        {\n' +
+    '          "internalType": "address",\n' +
+    '          "name": "a",\n' +
+    '          "type": "address"\n' +
+    '        }\n' +
+    '      ],\n' +
+    '      "name": "print",\n' +
+    '      "outputs": [],\n' +
+    '      "stateMutability": "view",\n' +
+    '      "type": "function",\n' +
+    '      "constant": true\n' +
+    '    }]'
 );
 
-
-
-
-
-// function startContract(_contractAddress){
-//   contract = new web3.eth.Contract(abi, _contractAddress);
-//   console.log("Read the contractaddress: "+_contractAddress);
-//
-// }
-// $(document).ready(function () {
-//   $(document).click(function () {
-//     // if($(".navbar-collapse").hasClass("in")){
-//     $('.navbar-collapse').collapse('hide');
-//     // }
-//   });
-// });
 
 function App() {
   const [contract, setContract] = useState();
@@ -177,6 +202,7 @@ function App() {
               console.log(_contract.address + " is the contract");
               setContract(_contract);
 
+
           });
 
 
@@ -186,40 +212,41 @@ function App() {
   },[])
 
   return(
-      <>
-        <NavDom/>
+      <Stack className="vw-100 vh-100">
+        <NavDom contract={contract}/>
+
           <Routes>
               <Route path='register' element={<RegisterFormDom contract={contract} account={account}/>}/>
               <Route path='wallet' element={<WalletDom contract={contract} account={account} web3Obj={web3Obj}/>}/>
               <Route path='myservices' element={<MyServicesDom contract={contract} account={account} web3Obj={web3Obj}/>}/>
+              <Route path='coaches' element={<CoachesBackendDom contract={contract} account={account} web3Obj={web3Obj}/>}/>
+              <Route path='store' element={<Store contract={contract} account={account} web3Obj={web3Obj}/>}/>
               <Route path='home' element={<HomeDom/>}/>
-
+              <Route path='' element={<HomeDom/>}/>
           </Routes>
           <Footer/>
-          </>
+          </Stack>
   );
 
 }
+
 
 const HomeDom = ()=>{
   return(
-     <Row>
-        <Col>
 
-            <h3 className={'display-3'}><center>Welcome to the Bulls Marketplace</center></h3>
-        </Col>
-      </Row>
+      <Video/>
+
   );
 }
-const NavDom = ()=>{
+const NavDom = (props)=>{
   return(
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
           <Container>
               <Navbar.Brand  as={Link} to="/home">Bulls Marketplace</Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="me-auto">
-                      <Nav.Link as={Link} to="/register">Register</Nav.Link>
+
                       <Nav.Link as={Link} to="/wallet">Wallet</Nav.Link>
                       <NavDropdown title="Services" id="basic-nav-dropdown">
                           <NavDropdown.Item as={Link} to="/myservices">My Services</NavDropdown.Item>
@@ -228,6 +255,8 @@ const NavDom = ()=>{
                       <Nav.Link as={Link} to="/store">Store</Nav.Link>
                   </Nav>
                   <Nav>
+                      <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                      <Nav.Link as={Link} to="/coaches">Backend</Nav.Link>
                       <Nav.Link as={Link} to="/about">About</Nav.Link>
 
                   </Nav>
@@ -236,29 +265,139 @@ const NavDom = ()=>{
       </Navbar>
   );
 }
+const CoachesBackendDom = (props)=>{
 
+    const [isCoach, setIsCoach] = useState();
+
+    useEffect(()=>{
+
+        async function load(){
+
+            const coach = await props.contract.methods.isCoachView(props.account).call();
+            setIsCoach(coach);
+            console.log(coach+' is isCoach');
+
+        }
+        load();
+    },[]);
+    return(<CoachesBackendDomInternal isCoach={isCoach} contract={props.contract} account={props.account}/>);
+}
+const CoachesBackendDomInternal=(props)=>{
+    const [listItems, setListItems] = useState();
+    useEffect(()=>{
+        async function load(){
+            const _requests = await getServiceRequests();
+
+            console.log('servide desc'+_requests[0]['service_description']);
+            const listItems = _requests.map((service) =>
+                <li>{service['service_name'] + ' ' + service['service_description'] + ': '} {<a href={"#"} onClick={() => admitService(service['address'],service['service_name'] , service['service_description'], service['price'])} className={"btn btn-primary"}>Admit</a>}</li>
+
+            );
+            setListItems(listItems);
+        }
+        load();
+    },[]);
+
+    const isCoach = props.isCoach;
+    console.log(isCoach);
+    if(isCoach){
+        return(<Stack className="align-items-center">
+            <h3 className="display-3">Admit Services</h3>
+            <ul>{listItems}</ul>
+        </Stack>);
+    }else{
+        return(<Container className="px-5 my-5">
+        <Row className="justify-content-center">
+
+                <Col className="col-lg-8">
+                    <Card className="border-0 rounded-3 shadow-lg p-5">
+
+                            <div className="card-body p-4"><center>
+
+                                    <div className="h1 fw-light">Register Coach</div>
+                                    <p className="mb-4 text-muted">You don't need a password because blockchain technology takes care of verifying.</p>
+
+                            </center></div>
+
+                        <form className="form-floating" ><center>
+
+                                <label htmlFor={"cname"} className={"mb-2"}>Username</label>
+                                <input className={"form-control mb-2"} id={"cname"} name={"cname"} placeholder="Username"
+                                />
+
+                        </center>
+
+                            <div className="d-grid">
+                                <a href={"#"} onClick={() => registerCoach(props.contract, props.account)} className={"btn btn-primary btn-lg"}>Register</a>
+                            </div>
+
+                        </form>
+                    </Card>
+
+                </Col>
+
+        </Row></Container>);
+    }
+
+}
 const RegisterFormDom = (props)=>{
-      return(
-      <Row>
-        <Col>
-          <h3 className="sub-header">Register Player</h3>
-          <form className="form-inline" role="form">
-            <div className="form-group">
-              <table>
-                <tr>
-                  <td><label htmlFor={"username"}>Username:</label></td>
-                  <td>
-                    <input className={"form-control"} id={"username"} name={"username"}/>
 
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <a href={"#"} onClick={() => registerPlayer(props.contract, props.account)} className={"btn btn-primary"}>Register</a>
-          </form>
-        </Col>
-      </Row>
-  );
+
+    const [isRegistered, setIsRegistered] = useState();
+    useEffect(()=>{
+
+        async function load(){
+            console.log(props.contract);
+            const isReg = await props.contract.methods.isRegistered(props.account).call();
+            console.log(isReg);
+            setIsRegistered(isReg);
+        }
+        load();
+    },[])
+    if(!isRegistered){
+        return(
+            <Container className="px-5 my-5">
+                <Row className="justify-content-center">
+
+                    <Col className="col-lg-8">
+                        <Card className="border-0 rounded-3 shadow-lg p-5">
+
+                            <div className="card-body p-4"><center>
+
+                                <div className="h1 fw-light">Register Yourself</div>
+                                <p className="mb-4 text-muted">You don't need a password because blockchain technology takes care of verifying.</p>
+
+                            </center></div>
+
+                            <form className="form-floating" ><center>
+
+                                <label htmlFor={"username"} className={"mb-2"}>Username</label>
+                                <input className={"form-control mb-2"} id={"username"} name={"username"} placeholder="Username"
+                                />
+
+                            </center>
+
+                                <div className="d-grid">
+                                    <a href={"#"} onClick={() => registerPlayer(props.contract, props.account)} className={"btn btn-primary btn-lg"}>Register</a>
+                                </div>
+
+                            </form>
+                        </Card>
+
+                    </Col>
+
+                </Row></Container>
+
+
+        );
+    }else{
+        return(<Stack className="justify-content-center align-items-center">
+                <h3 className="display-3">You are already registered.</h3>
+        </Stack>
+
+            );
+    }
+
 }
 
 const WalletDom = (props)=>{
@@ -289,8 +428,6 @@ const WalletDomInternal = (props)=>{
             const balance = await getBalance(props.contract, props.account, props.web3Obj);
             console.log(balance);
             setBalance(balance);
-
-
         }
         load();
     },[]);
@@ -298,17 +435,20 @@ const WalletDomInternal = (props)=>{
         console.log("He is registered");
 
 
-return(<Row>
-    <Col>
+return(<Row >
+    <Col >
         <h3 className="sub-header">You have {balance} Ether</h3>
     </Col>
+
 </Row>);
-    }else{
+    }
+    else{
         return (
             <Row>
                 <Col>
                     <h3 className="sub-header">You are not registred.</h3>
                 </Col>
+
             </Row>
         );
     }
@@ -346,13 +486,22 @@ async function getServices(account){
 
     return services;
 }
+async function getServiceRequests(){
+    let services = await $.get( "getServiceRequests");
+
+    return services;
+}
+async function admitService(address, name, description,price){
+ await $.get('admitservice?address='+address+'&name='+name+'&description='+description+'&price='+price);
+}
 function registerPlayer(contract, account) {
 
-  console.log(document.getElementById('username').value);
+
 
   contract.methods.register ().send( {from: account}).then(function(receipt){
     console.log(document.getElementById('username').value);
     if(receipt){
+        alert('Executing with '+document.getElementById('username').value+' and '+account);
       const Http = new XMLHttpRequest();
       const url='http://localhost:3300/registeruser?username='+document.getElementById('username').value+ '&address='+account;
       Http.open("GET", url);
@@ -369,32 +518,32 @@ function registerPlayer(contract, account) {
   });
 
 }
-//
-// function registerCoach() {
-//
-//   console.log('blabla '+document.getElementById('cname').value);
-//
-//
-//   contract.methods.registerCoach ().send( {from: account}).then(function(receipt){
-//     console.log('blabla2 '+document.getElementById('cname').value);
-//     if(receipt){
-//
-//
-//       const Http = new XMLHttpRequest();
-//       const url='http://localhost:3300/registercoach?username='+document.getElementById('cname').value+ '&address='+account;
-//       Http.open("GET", url);
-//       Http.send();
-//
-//       Http.onreadystatechange = (e) => {
-//         console.log(Http.responseText)
-//       }
-//       console.log("Coach with address ",account, " got registred.");
-//     }else{
-//       console.log("Registration failed.");
-//     }
-//
-//   });
-// }
+
+function registerCoach(contract, account) {
+
+  console.log('blabla '+document.getElementById('cname').value);
+
+
+  contract.methods.registerCoach ().send( {from: account}).then(function(receipt){
+    console.log('blabla2 '+document.getElementById('cname').value);
+    if(receipt){
+
+
+      const Http = new XMLHttpRequest();
+      const url='http://localhost:3300/registercoach?username='+document.getElementById('cname').value+ '&address='+account;
+      Http.open("GET", url);
+      Http.send();
+
+      Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+      }
+      console.log("Coach with address ",account, " got registred.");
+    }else{
+      console.log("Registration failed.");
+    }
+
+  });
+}
 //
 //
 function requestRegisterService(contract, account){
@@ -405,7 +554,7 @@ function requestRegisterService(contract, account){
       return;
     }
     const Http = new XMLHttpRequest();
-    const url='http://localhost:3300/requestRegisterService?name='+document.getElementById('servicename').value+ '&description='+document.getElementById('servicedescription').value+'&address='+account;
+    const url='http://localhost:3300/requestRegisterService?name='+document.getElementById('servicename').value+ '&description='+document.getElementById('servicedescription').value+'&address='+account +'&price='+document.getElementById('price').value;
     Http.open("GET", url);
     Http.send();
 
@@ -493,6 +642,27 @@ async function getBalance(_contract, _account, _web3Obj){
   return await _web3Obj.eth.getBalance(account).then(result => _web3Obj.utils.fromWei(result,"ether"));
 }
 
+export function buy_service(contract, account, web3Obj, addressTo, servicename, price){
+
+    contract.methods.sendMoney (addressTo).send( {from: account,
+        value: web3Obj.utils.toWei(price, 'ether')}).then(async function(receipt){
+
+        if(receipt){
+            await $.get('http://localhost:3300/buyservice?servicename='+servicename+ '&address='+account)
+
+            //console.log("Player with address ",account, " got registred.");
+        }else{
+            console.log("Buying service failed.");
+        }
+
+    });
+}
+
+export async function get_allservices(){
+    let services = await $.get( "getallservices");
+
+    return services;
+}
 
 
 export default App;

@@ -33,6 +33,21 @@ require('dotenv').config();
          })
      }
 
+     const buyService = (_servicename, _address)=>{
+         client.query('INSERT INTO bought_services(servicename, address) VALUES($1,$2)',[_servicename, _address],(error) =>{
+             if(error){
+                 throw error;
+             }
+         })
+     }
+     const serviceDone= (_servicename, _address)=>{
+             client.query('DELETE FROM bought_services WHERE servicename=$1 AND address=$2',[_servicename, _address],(error) =>{
+             if(error){
+                 throw error;
+             }
+         })
+     }
+
      const deletePlayer = (address)=>{
          client.query('DELETE FROM users WHERE address=$1',[address],(error) =>{
              if(error){
@@ -57,16 +72,16 @@ require('dotenv').config();
          console.log("User "+address+" got deleted\n");
      }
 
-     const dbRequestRegisterService = (address, name, description)=>{
-         client.query('INSERT INTO service_requests(address, service_name, service_description) VALUES($1, $2, $3)',[address, name, description],(error) =>{
+     const dbRequestRegisterService = (address, name, description, price)=>{
+         client.query('INSERT INTO service_requests(address, service_name, service_description, price) VALUES($1, $2, $3, $4)',[address, name, description, price],(error) =>{
              if(error){
                  throw error;
              }
          })
      }
 
-    const submitService = (address, name, description)=>{
-    client.query('INSERT INTO services(address, service_name, service_description) VALUES($1, $2, $3)',[address, name, description],(error) =>{
+    const submitService = (address, name, description, price)=>{
+    client.query('INSERT INTO services(address, service_name, service_description, price) VALUES($1, $2, $3, $4)',[address, name, description, price],(error) =>{
         if(error){
             throw error;
         }
@@ -80,6 +95,12 @@ const getServices = async ()=>{
 
 const getAdmittedServices = async (address)=>{
     const results = await client.query('SELECT * FROM services WHERE address=$1',[address]);
+
+    return results.rows;
+}
+
+const getAllServices = async ()=>{
+    const results = await client.query('SELECT * FROM services');
 
     return results.rows;
 }
@@ -105,8 +126,8 @@ const getUsername = async (address)=>{
             })
      }
 
-const deleteServiceRequest = (address,service_name, service_description)=>{
-    client.query('DELETE FROM service_requests WHERE address=$1 AND service_name=$2 AND service_description=$3',[address,service_name,service_description],(error) =>{
+const deleteServiceRequest = (address,service_name)=>{
+    client.query('DELETE FROM service_requests WHERE address=$1 AND service_name=$2',[address,service_name],(error) =>{
         if(error){
             throw error;
         }
@@ -139,7 +160,10 @@ module.exports = {
     deleteServiceRequest,
     deleteService,
     getUsername,
-    getAdmittedServices
+    getAdmittedServices,
+    buyService,
+    serviceDone,
+    getAllServices
 }
 
 

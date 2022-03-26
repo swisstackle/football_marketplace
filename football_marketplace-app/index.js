@@ -12,13 +12,9 @@ app.use(express.static('src'));
 app.listen('3300', function () {
     console.log('CORS-enabled web server listening on port 3300')
 });
-// app.get('/', function (req, res) {
-//     res.render('index.html');
-// });
 
 app.get('/registeruser', function(req, res){
-    console.log(req.query.username);
-    console.log(req.query.address);
+    console.log("Registering user "+req.query.username+" with address "+req.query.address);
     db.newPlayer(req.query.username, req.query.address);
     res.send("Success");
 });
@@ -31,22 +27,32 @@ app.get('/deleteuser', function(req, res){
 
 app.get('/requestRegisterService', function(req, res){
     console.log(req.query.address);
-    db.dbRequestRegisterService(req.query.address, req.query.name, req.query.description);
+    db.dbRequestRegisterService(req.query.address, req.query.name, req.query.description, req.query.price);
     res.send("Success");
 });
 
-app.get('/submitservice', async function(req, res){
-    const results = await db.getServices();
-    for(let r of results){
-        db.deleteServiceRequest(r['address'],r['service_name'],r['service_description']);
-        db.submitService(r['address'],r['service_name'],r['service_description']);
-    }
+app.get('/admitservice', async function(req, res){
+    const serviceName = req.query.name;
+    const address = req.query.address;
+    const description = req.query.description;
+
+
+        db.deleteServiceRequest(address, serviceName);
+        db.submitService(address, serviceName, description, req.query.price);
+
     res.send("Success");
 });
 
 app.get('/getAdmittedServices', async function(req, res){
     console.log(req.query.address);
     const results = await db.getAdmittedServices(req.query.address);
+
+    res.send(results);
+});
+
+app.get('/getServiceRequests', async function(req, res){
+
+    const results = await db.getServices();
 
     res.send(results);
 });
@@ -74,4 +80,21 @@ app.get('/getcontractaddress', function(req, res){
     let addy = fs.readFileSync("address.txt");
     console.log("The addy is "+addy);
     res.send(addy);
+});
+
+app.get('/buyservice', function(req, res){
+    console.log(req.query.address);
+    db.buyService(req.query.servicename, req.query.address);
+    res.send("Success");
+});
+
+app.get('/servicedone', function(req, res){
+    console.log(req.query.address);
+    db.serviceDone(req.query.servicename, req.query.address);
+    res.send("Success");
+});
+
+app.get('/getallservices', async function(req, res){
+    const results = await db.getAllServices();
+    res.send(results);
 });
