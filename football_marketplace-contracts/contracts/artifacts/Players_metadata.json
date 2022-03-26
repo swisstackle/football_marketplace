@@ -25,6 +25,25 @@
 						"type": "address"
 					}
 				],
+				"name": "isCoachView",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "a",
+						"type": "address"
+					}
+				],
 				"name": "isRegistered",
 				"outputs": [
 					{
@@ -144,7 +163,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Git/football_marketplace/football_marketplace-contracts/contracts/Players.sol": "Players"
+			"Git/football_marketplace - Copy/football_marketplace-contracts/contracts/Players.sol": "Players"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -158,12 +177,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"Git/football_marketplace/football_marketplace-contracts/contracts/Players.sol": {
-			"keccak256": "0x46319490e1551de84fa42292b63a7a72b8f3a0f252e1e05745b61bff9e10e143",
+		"Git/football_marketplace - Copy/football_marketplace-contracts/contracts/Players.sol": {
+			"keccak256": "0xe9ad6943e5ed59a1e69f7131be65797bf5fbc8562a729beb03d8d0e7cdaa59b4",
 			"license": "GPL-3.0",
 			"urls": [
-				"bzz-raw://4adf7fb68bb6b3a423af58e3fbce8441f66370fdc51ea4e12281002ba7b11f46",
-				"dweb:/ipfs/QmY5LLxETNiofpoDv72TH42YdXCPGGVQ5jJ4CwB6vYRLrB"
+				"bzz-raw://44c80a0499aa0288b70c9758adb51e05e18824616498847cdbc5eb5131230f87",
+				"dweb:/ipfs/QmcS7jDLp6CzwXuHr14PzeD4g6PRHRwUKfj5kDTN1D6ty3"
 			]
 		}
 	},

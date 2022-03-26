@@ -87,6 +87,9 @@ contract Players{
    function isRegistered (address a) public view returns(bool){
          return (member[a] == 1);
    }
+    function isCoachView (address a) public view returns(bool){
+        return (isCoach[a]==1);
+    }
 
     function print(address a) public view {
         uint p = players[a];
