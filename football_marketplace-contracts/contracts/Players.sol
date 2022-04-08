@@ -3,10 +3,12 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Players{
-     address payable chairperson;
+   // Set the address of the chairperson here
+     address payable chairperson= payable(0x331f839174981d1BcA828131ecFB2A07E1871dBb);
       mapping(address =>uint) member;
     mapping(address=>uint) isCoach;
     mapping(address=>uint) players;
+
   
 
       modifier onlyMember{ 
@@ -31,9 +33,9 @@ contract Players{
     }
 
     constructor () public payable { 
-         chairperson= payable(msg.sender);
-         
-         players[chairperson] = msg.sender.balance;
+//         chairperson= payable(msg.sender);
+//
+//         players[chairperson] = msg.sender.balance;
         // chairperson.transfer(msg.value);
          //console.log("System has been initiated with chairperson: ", chairperson, " with balance ", msg.sender.balance);
         }
@@ -90,10 +92,9 @@ contract Players{
     function isCoachView (address a) public view returns(bool){
         return (isCoach[a]==1);
     }
-
-    function print(address a) public view {
-        uint p = players[a];
-        //console.log("Player ",a, " has a balance of ", p);
+    function isChairperson (address a) public view returns(bool){
+        return (payable(a) == chairperson);
     }
+
     
 }

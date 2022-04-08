@@ -172,8 +172,14 @@ var abi = JSON.parse('[{\n' +
     '          "type": "address"\n' +
     '        }\n' +
     '      ],\n' +
-    '      "name": "print",\n' +
-    '      "outputs": [],\n' +
+    '      "name": "isChairperson",\n' +
+    '      "outputs": [\n' +
+    '        {\n' +
+    '          "internalType": "bool",\n' +
+    '          "name": "",\n' +
+    '          "type": "bool"\n' +
+    '        }\n' +
+    '      ],\n' +
     '      "stateMutability": "view",\n' +
     '      "type": "function",\n' +
     '      "constant": true\n' +
@@ -283,6 +289,7 @@ const CoachesBackendDom = (props)=>{
 }
 const CoachesBackendDomInternal=(props)=>{
     const [listItems, setListItems] = useState();
+    const [isChairperson, setIsChairperson] = useState();
     useEffect(()=>{
         async function load(){
             const _requests = await getServiceRequests();
@@ -292,6 +299,8 @@ const CoachesBackendDomInternal=(props)=>{
 
             );
             setListItems(listItems);
+            const isChair = await props.contract.methods.isChairperson(props.account).call();
+            setIsChairperson(isChair);
         }
         load();
     },[]);
@@ -303,37 +312,42 @@ const CoachesBackendDomInternal=(props)=>{
             <ul>{listItems}</ul>
         </Stack>);
     }else{
-        return(<Container className="px-5 my-5">
-        <Row className="justify-content-center">
+        if(isChairperson){
+            return(<Container className="px-5 my-5">
+                <Row className="justify-content-center">
 
-                <Col className="col-lg-8">
-                    <Card className="border-0 rounded-3 shadow-lg p-5">
+                    <Col className="col-lg-8">
+                        <Card className="border-0 rounded-3 shadow-lg p-5">
 
                             <div className="card-body p-4"><center>
 
-                                    <div className="h1 fw-light">Register Coach</div>
-                                    <p className="mb-4 text-muted">You don't need a password because blockchain technology takes care of verifying.</p>
+                                <div className="h1 fw-light">Register Coach</div>
+                                <p className="mb-4 text-muted">You don't need a password because blockchain technology takes care of verifying.</p>
 
                             </center></div>
 
-                        <form className="form-floating" ><center>
+                            <form className="form-floating" ><center>
 
                                 <label htmlFor={"cname"} className={"mb-2"}>Username</label>
                                 <input className={"form-control mb-2"} id={"cname"} name={"cname"} placeholder="Username"
                                 />
 
-                        </center>
+                            </center>
 
-                            <div className="d-grid">
-                                <a href={"#"} onClick={() => registerCoach(props.contract, props.account)} className={"btn btn-primary btn-lg"}>Register</a>
-                            </div>
+                                <div className="d-grid">
+                                    <a href={"#"} onClick={() => registerCoach(props.contract, props.account)} className={"btn btn-primary btn-lg"}>Register</a>
+                                </div>
 
-                        </form>
-                    </Card>
+                            </form>
+                        </Card>
 
-                </Col>
+                    </Col>
 
-        </Row></Container>);
+                </Row></Container>);
+        }else{
+            return("You are neither a coach or a chairperson. ");
+        }
+
     }
 
 }
