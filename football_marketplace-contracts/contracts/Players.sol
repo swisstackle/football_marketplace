@@ -4,10 +4,9 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Players{
      address payable chairperson;
-      mapping (address=>uint) public players; // maps player to its balance
       mapping(address =>uint) member;
     mapping(address=>uint) isCoach;
-
+    mapping(address=>uint) players;
   
 
       modifier onlyMember{ 
@@ -19,16 +18,18 @@ contract Players{
          require(member[toAddress]==1);
             _;
       }
-   
-      modifier beYourSelfViaAddress (address _ad){
-         require(msg.sender == _ad);
-         _;
-      }
+  
 
     modifier onlyCoach{
         require(isCoach[msg.sender]==1);
         _;
     }
+
+    modifier onlyChairperson{
+        require(msg.sender == chairperson);
+        _;
+    }
+
     constructor () public payable { 
          chairperson= payable(msg.sender);
          
@@ -42,11 +43,10 @@ contract Players{
         member[ad] = 1;
          isCoach[ad]=0;
      }
-    function registerCoach () public payable{
-        address payable ad = payable(msg.sender);
-        players[ad] = msg.sender.balance;
-        member[ad] = 1;
-        isCoach[ad]=1;
+    function registerCoach (address payable toRegister) onlyChairperson public payable{
+        players[toRegister] = msg.sender.balance;
+        member[toRegister] = 1;
+        isCoach[toRegister]=1;
     }
      function unRegister() public payable{
          address payable ad = payable(msg.sender);
@@ -64,17 +64,17 @@ contract Players{
     function submit_service() onlyCoach public {
 
     }
-     function unRegisterService() onlyMember public {
-         //same
-     }
+//     function unRegisterService() onlyMember public {
+//         //same
+//     }
 
-      function editService() onlyMember public {
-         //same
-      }
-      function rateService() onlyMember public {
-         //same
-         
-      }
+//      function editService() onlyMember public {
+//         //same
+//      }
+//      function rateService() onlyMember public {
+//         //same
+//
+//      }
       
      function sendMoney(address payable toAddress) onlyMember onlyMemberTo(toAddress) payable public {
          address fromAddress = msg.sender;

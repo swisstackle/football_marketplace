@@ -41,11 +41,15 @@ const StoreInternal = (props) => {
 
 
 
-
+    if(props.registered){
         return(<Stack className="align-items-center">
             <h3 className="display-3">Buy Services</h3>
             <ul>{listItems}</ul>
         </Stack>);
+    }else{
+        return("Not registered");
+    }
+
 
 }
 

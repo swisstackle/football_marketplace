@@ -435,14 +435,7 @@ return(<Row >
 </Row>);
     }
     else{
-        return (
-            <Row>
-                <Col>
-                    <h3 className="sub-header">You are not registred.</h3>
-                </Col>
-
-            </Row>
-        );
+        return ("Not Registered.");
     }
 }
 
