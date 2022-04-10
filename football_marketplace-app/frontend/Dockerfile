@@ -1,5 +1,5 @@
 FROM node:12-alpine
 WORKDIR /frontend
-COPY /football_marketplace-app/frontend .
+COPY . .
 RUN apk add nano
 CMD ["npm", "start"]
