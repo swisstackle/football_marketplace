@@ -60,7 +60,7 @@ var abi = JSON.parse('[{\n' +
     '      "payable": true\n' +
     '    },\n' +
     '    {\n' +
-    '      "inputs": [],\n' +
+    '      "inputs": [{"internalType":"address payable","name":"toRegister", "type":"address"}],\n' +
     '      "name": "registerCoach",\n' +
     '      "outputs": [],\n' +
     '      "stateMutability": "payable",\n' +
@@ -331,6 +331,9 @@ const CoachesBackendDomInternal=(props)=>{
                                 <label htmlFor={"cname"} className={"mb-2"}>Username</label>
                                 <input className={"form-control mb-2"} id={"cname"} name={"cname"} placeholder="Username"
                                 />
+                                <label htmlFor={"caddress"} className={"mb-2"}>Address of Coach</label>
+                                <input className={"form-control mb-2"} id={"caddress"} name={"caddress"} placeholder="Address of Coach"
+                                />
 
                             </center>
 
@@ -518,12 +521,12 @@ function registerCoach(contract, account) {
 
 
 
-  contract.methods.registerCoach ().send( {from: account}).then(function(receipt){
+  contract.methods.registerCoach (document.getElementById('caddress').value).send( {from: account}).then(function(receipt){
     if(receipt){
 
 
       const Http = new XMLHttpRequest();
-      const url='http://localhost:3300/registercoach?username='+document.getElementById('cname').value+ '&address='+account;
+      const url='http://localhost:3300/registercoach?username='+document.getElementById('cname').value+ '&address='+document.getElementById('caddress').value;
       Http.open("GET", url);
       Http.send();
 
