@@ -4,7 +4,7 @@ pragma solidity >=0.4.22 <0.9.0;
 
 contract Players{
    // Set the address of the chairperson here
-     address payable chairperson= payable(0x331f839174981d1BcA828131ecFB2A07E1871dBb);
+     address payable chairperson= payable(0x377bcBeB0412744195725D2ec1C250Af48E34C65);
       mapping(address =>uint) member;
     mapping(address=>uint) isCoach;
     mapping(address=>uint) players;
