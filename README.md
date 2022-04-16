@@ -1,6 +1,5 @@
-# football_marketplace
+# How to deploy with Docker and Ganache (LOCAL)
 
-How to deploy
 
 1.	Download the Zip File
 2.	Open up Ganache and start a new workspace. After that, add the truffle-cnofig.js in /football_marketplace/football_marketplace-contracts to Ganache:
@@ -34,7 +33,7 @@ h.	To buy a service, go to store and select a service with the “buy” button.
 i.	If you are registered as a coach, you can admit services that users want to offer in the “backend” by clicking on the admit button of the respective service.
 
 
-# How to deploy with Docker
+# How to deploy with Docker via Ropsten Network
 1.	Install Docker here: Get Docker | Docker Documentation
 2.	In /football_marketplace/football_marketplace-app/.env change HOST from “localhost” to “postgres”
 3.	For security reasons, only one chairperson (address) will be able to register new coaches. You will have to set the address of the chairperson manually in /football_marketplace/football_marketplace-contracts/contracts/Players.sol file. Set the variable “chairperson” to whatever the address of the chairperson should be. 
