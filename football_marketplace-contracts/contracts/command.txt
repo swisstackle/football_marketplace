@@ -1,1 +1,0 @@
-Players.deployed().then(function(instance){return instance.getTokenAddress({from: "0x7e10E4A80dd5D140Fe2aA8b4f8DC7daaDDa6E530"});});
