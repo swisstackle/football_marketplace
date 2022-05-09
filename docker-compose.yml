@@ -1,0 +1,26 @@
+services:
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: 1546
+      POSTGRES_DB: marketplace
+      POSTGRES_USER: postgres
+    build:
+      context: ./dbdockerfile
+
+    ports:
+      - 5432:5432
+  football_marketplace:
+    build:
+      context: .
+
+    ports:
+      - 3300:3300
+    depends_on:
+      - "postgres"
+  reactjs:
+    build:
+      context: ./football_marketplace-app/frontend
+    depends_on:
+      - "football_marketplace"
+    ports:
+      - 3000:3000
