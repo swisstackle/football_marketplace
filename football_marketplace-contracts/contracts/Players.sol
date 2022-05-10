@@ -12,7 +12,7 @@ contract Players is ERC20{
 
    */
      
-     address  chairperson= address(0x5592b0f6ca24D925CDaB7Ca187487A701571759E);
+     address  chairperson;
      /*
    “member” is a mapping from address to uint that determines whether a certain address is 
 registered or not. 0 means the address is not registered. 1 means the address is registered. We use 
@@ -88,6 +88,7 @@ not. It is used to register a coach.
 
         /*constructor creates new erc20 contract and mints initialSupply tokens to the contract*/
     constructor (uint256 initialSupply) public ERC20("Btt", "Btt") payable { 
+		chairperson = msg.sender;
             _mint(address(this), initialSupply*10** uint(decimals()));
         }
         /*“register()” is the function to register an address as a player. It can be used by anyone. It also airdrops each newly registered player 20 Btt.*/
@@ -187,6 +188,8 @@ not. It is necessary to check whether the account using the webapp is the chairp
     function getBalance(address from) public view returns(uint256) {
             return balanceOf(from)/(10**uint(decimals()));
     }
-
+    function getChairperson () public view returns(address){
+        return chairperson;
+    }
     
 }
