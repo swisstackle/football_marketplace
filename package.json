@@ -7,7 +7,7 @@
     	"test": "echo \"Error: no test specified\" && exit 1",
 	"start": "cd football_marketplace-app && npm start",
 	"install": "npm install -g truffle && cd football_marketplace-app && npm install",
-	"migrate" : "cd football_marketplace-contracts & truffle migrate --network=development"
+	"migrate" : "cd football_marketplace-contracts & truffle migrate --network=development --reset"
   },
   "repository": {
     "type": "git",
