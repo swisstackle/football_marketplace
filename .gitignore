@@ -1,1 +1,11 @@
 /.idea
+football_marketplace-contracts/build/contracts/SafeMath.json
+football_marketplace-app/address.txt
+football_marketplace-contracts/build/contracts/Btt.json
+football_marketplace-contracts/build/contracts/Context.json
+football_marketplace-contracts/build/contracts/ERC20.json
+football_marketplace-contracts/build/contracts/IERC20.json
+football_marketplace-contracts/build/contracts/IERC20Metadata.json
+football_marketplace-contracts/build/contracts/Migrations.json
+football_marketplace-contracts/build/contracts/Players.json
+football_marketplace-contracts/build/contracts/SafeMath.json
