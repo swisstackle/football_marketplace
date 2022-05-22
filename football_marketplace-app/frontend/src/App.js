@@ -9,6 +9,7 @@ import Store from "./Store";
 import RequestRegisterService from "./RequestRegisterService";
 import CoachesBackendDom from './CoachesBackendDom';
 import RegisterFormDom from './Register';
+import WalletDom from "./WalletDom";
 
 import {
     Navbar,
@@ -585,52 +586,6 @@ const NavDom = (props) => {
     );
 }
 
-const WalletDom = (props) => {
-    const _contract = props.contract;
-    const _account = props.account;
-    const [isRegistered, setIsRegistred] = useState();
-    useEffect(() => {
-
-        async function load() {
-
-            const isReg = await _contract.methods.isRegistered(_account).call();
-            setIsRegistred(isReg);
-        }
-
-        load();
-    }, [])
-
-
-    return (
-        <WalletDomInternal registered={isRegistered} contract={props.contract} account={props.account}
-                           web3Obj={props.web3Obj}/>
-    );
-}
-const WalletDomInternal = (props) => {
-
-    const [balance, setBalance] = useState();
-    useEffect(() => {
-        async function load() {
-            const balance = await getBalance(props.contract, props.account, props.web3Obj);
-            setBalance(balance);
-        }
-
-        load();
-    }, []);
-    if (props.registered) {
-
-
-        return (<Row>
-            <Col>
-                <h3 className="sub-header">You have {balance} Btt</h3>
-            </Col>
-
-        </Row>);
-    } else {
-        return ("Not Registered.");
-    }
-}
-
 const MyServicesDom = (props) => {
     const [listItems, setListItems] = useState();
 
@@ -716,7 +671,7 @@ export function requestRegisterService(contract, account) {
 
 
 
-async function getBalance(_contract, _account, _web3Obj) {
+export async function getBalance(_contract, _account, _web3Obj) {
     let contract = _contract;
     let account = _account;
     //result has to be converted to Btt. The decimal used here is 18. Has to be changed if the decimal changes
