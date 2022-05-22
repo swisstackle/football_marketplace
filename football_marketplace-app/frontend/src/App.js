@@ -110,6 +110,30 @@ var abi = JSON.parse('[\n' +
     '\t\t"inputs": [\n' +
     '\t\t\t{\n' +
     '\t\t\t\t"internalType": "address",\n' +
+    '\t\t\t\t"name": "to",\n' +
+    '\t\t\t\t"type": "address"\n' +
+    '\t\t\t},\n' +
+    '\t\t\t{\n' +
+    '\t\t\t\t"internalType": "uint256",\n' +
+    '\t\t\t\t"name": "amount",\n' +
+    '\t\t\t\t"type": "uint256"\n' +
+    '\t\t\t}\n' +
+    '\t\t],\n' +
+    '\t\t"name": "airdrop2",\n' +
+    '\t\t"outputs": [\n' +
+    '\t\t\t{\n' +
+    '\t\t\t\t"internalType": "bool",\n' +
+    '\t\t\t\t"name": "",\n' +
+    '\t\t\t\t"type": "bool"\n' +
+    '\t\t\t}\n' +
+    '\t\t],\n' +
+    '\t\t"stateMutability": "nonpayable",\n' +
+    '\t\t"type": "function"\n' +
+    '\t},\n' +
+    '\t{\n' +
+    '\t\t"inputs": [\n' +
+    '\t\t\t{\n' +
+    '\t\t\t\t"internalType": "address",\n' +
     '\t\t\t\t"name": "owner",\n' +
     '\t\t\t\t"type": "address"\n' +
     '\t\t\t},\n' +
@@ -224,6 +248,19 @@ var abi = JSON.parse('[\n' +
     '\t\t\t\t"internalType": "uint256",\n' +
     '\t\t\t\t"name": "",\n' +
     '\t\t\t\t"type": "uint256"\n' +
+    '\t\t\t}\n' +
+    '\t\t],\n' +
+    '\t\t"stateMutability": "view",\n' +
+    '\t\t"type": "function"\n' +
+    '\t},\n' +
+    '\t{\n' +
+    '\t\t"inputs": [],\n' +
+    '\t\t"name": "getChairperson",\n' +
+    '\t\t"outputs": [\n' +
+    '\t\t\t{\n' +
+    '\t\t\t\t"internalType": "address",\n' +
+    '\t\t\t\t"name": "",\n' +
+    '\t\t\t\t"type": "address"\n' +
     '\t\t\t}\n' +
     '\t\t],\n' +
     '\t\t"stateMutability": "view",\n' +
@@ -644,6 +681,7 @@ const RegisterFormDom = (props) => {
     useEffect(() => {
 
         async function load() {
+            console.log(props.contract);
             const isReg = await props.contract.methods.isRegistered(props.account).call();
             setIsRegistered(isReg);
         }
@@ -792,21 +830,12 @@ async function admitService(address, name, description, price) {
 }
 
 function registerPlayer(contract, account) {
-
+    console.log(contract.address);
     contract.methods.register().send({from: account}).then(function (receipt) {
         if (receipt) {
             alert('Executing with ' + document.getElementById('username').value + ' and ' + account);
-            const Http = new XMLHttpRequest();
-            const url = 'http://localhost:3300/registeruser?username=' + document.getElementById('username').value + '&address=' + account;
-            Http.open("GET", url);
-            Http.send();
-
-            Http.onreadystatechange = (e) => {
-            }
-
-        } else {
+             $.get('http://localhost:3300/registeruser?username=' + document.getElementById('username').value + '&address=' + account, {async:false});
         }
-
     });
 
 }
@@ -817,17 +846,9 @@ function registerCoach(contract, account) {
     contract.methods.registerCoach(document.getElementById('caddress').value).send({from: account}).then(function (receipt) {
         if (receipt) {
 
+            $.get('http://localhost:3300/registercoach?username=' + document.getElementById('cname').value + '&address=' + document.getElementById('caddress').value, {async:false});
 
-            const Http = new XMLHttpRequest();
-            const url = 'http://localhost:3300/registercoach?username=' + document.getElementById('cname').value + '&address=' + document.getElementById('caddress').value;
-            Http.open("GET", url);
-            Http.send();
-
-            Http.onreadystatechange = (e) => {
-            }
-        } else {
         }
-
     });
 }
 
@@ -838,52 +859,17 @@ export function requestRegisterService(contract, account) {
             alert("You are not registred, you can't register a service.");
             return;
         }
-        const Http = new XMLHttpRequest();
-        const url = 'http://localhost:3300/requestRegisterService?name=' + document.getElementById('servicename').value + '&description=' + document.getElementById('servicedescription').value + '&address=' + account + '&price=' + document.getElementById('price').value;
-        Http.open("GET", url);
-        Http.send();
+        $.get('http://localhost:3300/requestRegisterService?name=' + document.getElementById('servicename').value + '&description=' + document.getElementById('servicedescription').value + '&address=' + account + '&price=' + document.getElementById('price').value, {async:false});
 
-
-        Http.onreadystatechange = (e) => {
-            console.log(Http.responseText);
-            if (Http.responseText == "Success") {
-                $('#servicename').val('');
-                $('#servicedescription').val('');
-                $('#price').val('');
-                alert("Successfully created service.")
-            }
-        }
-
+        $('#servicename').val('');
+        $('#servicedescription').val('');
+        $('#price').val('');
+        alert("Successfully created service.")
+        //check if get request succesful
     });
 }
 
-function submitService(contract, account) {
 
-    contract.methods.isRegistered(account).call().then(function (isReg) { // check if the address is registred first
-        //document.getElementById('lastInfo').innerHTML = info;
-        if (!isReg) {
-            alert("You are not registred, you can't submit a service.");
-            return;
-        }
-        contract.methods.submit_service().send({from: account}).then(function (receipt) {
-            if (receipt) {
-                const Http = new XMLHttpRequest();
-                const url = 'http://localhost:3300/submitservice';
-                Http.open("GET", url);
-                Http.send();
-
-                Http.onreadystatechange = (e) => {
-                }
-
-            } else {
-            }
-
-        });
-
-
-    });
-
-}
 
 async function getBalance(_contract, _account, _web3Obj) {
     let contract = _contract;
