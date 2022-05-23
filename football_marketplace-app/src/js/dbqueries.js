@@ -26,6 +26,8 @@ require('dotenv').config();
          return res;
      }
      const newPlayer =  (name, address)=>{
+         name = encodeURIComponent(name);
+         //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
          client.query('INSERT INTO users(name, address) VALUES($1,$2)',[name, address],(error) =>{
              if(error){
                  throw error;
