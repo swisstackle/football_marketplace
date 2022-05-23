@@ -123,6 +123,8 @@ const getAllServices = async ()=>{
 }
 
 const getUsername = async (address)=>{
+    //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
+
     let results = await client.query('SELECT name FROM users WHERE address=$1',[address]);
     if(results.rows.length == 0){
         results = await client.query('SELECT name FROM coaches WHERE address=$1',[address]);
