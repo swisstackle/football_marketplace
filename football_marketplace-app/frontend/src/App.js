@@ -607,13 +607,17 @@ export async function admitService(address, name, description, price) {
 
 export function registerPlayer(contract, account) {
     console.log(contract.address);
-    contract.methods.register().send({from: account}).then(function (receipt) {
-        if (receipt) {
-            alert('Executing with ' + document.getElementById('username').value + ' and ' + account);
-             $.get('http://localhost:3300/registeruser?username=' + document.getElementById('username').value + '&address=' + account, {async:false});
-        }
-    });
-
+    let username = document.getElementById('username').value;
+    username = encodeURIComponent(username);
+    console.log(username);
+    if(username.length > 0) {
+        contract.methods.register().send({from: account}).then(function (receipt) {
+            if (receipt) {
+                alert('Executing with ' + document.getElementById('username').value + ' and ' + account);
+                $.get('http://localhost:3300/registeruser?username=' + username + '&address=' + account, {async: false});
+            }
+        });
+    }
 }
 
 export function registerCoach(contract, account) {
