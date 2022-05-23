@@ -635,13 +635,19 @@ export function registerCoach(contract, account) {
 }
 
 export function requestRegisterService(contract, account) {
-
+    let servicename = document.getElementById('servicename').value;
+    let description = document.getElementById('servicedescription').value;
+    let price = document.getElementById('price').value;
+    servicename = encodeURIComponent(servicename);
+    description = encodeURIComponent(description);
+    price = encodeURIComponent(price);
+    if(servicename.length > 0 && description.length > 0 && parseInt(price) > 0)
     contract.methods.isRegistered(account).call().then(function (isReg) {
         if (!isReg) {
             alert("You are not registred, you can't register a service.");
             return;
         }
-        $.get('http://localhost:3300/requestRegisterService?name=' + document.getElementById('servicename').value + '&description=' + document.getElementById('servicedescription').value + '&address=' + account + '&price=' + document.getElementById('price').value, {async:false});
+        $.get('http://localhost:3300/requestRegisterService?name=' + servicename+ '&description=' + description + '&address=' + account + '&price=' + price, {async:false});
 
         $('#servicename').val('');
         $('#servicedescription').val('');
