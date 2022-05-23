@@ -36,6 +36,8 @@ require('dotenv').config();
      }
 
      const buyService = (_servicename, _address)=>{
+         _servicename = encodeURIComponent(_servicename);
+         //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
          client.query('INSERT INTO bought_services(servicename, address) VALUES($1,$2)',[_servicename, _address],(error) =>{
              if(error){
                  throw error;
