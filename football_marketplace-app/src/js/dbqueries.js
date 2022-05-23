@@ -95,7 +95,7 @@ require('dotenv').config();
     const submitService = (address, name, description, price)=>{
          name = encodeURIComponent(name);
          description = encodeURIComponent(description);
-         if(price > 0 && name.length > 0 && description.length > 0){
+         if(parseInt(price) > 0 && name.length > 0 && description.length > 0){
              client.query('INSERT INTO services(address, service_name, service_description, price) VALUES($1, $2, $3, $4)',[address, name, description, price],(error) =>{
                  if(error){
                      throw error;
