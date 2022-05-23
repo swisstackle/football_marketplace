@@ -55,6 +55,7 @@ require('dotenv').config();
      }
 
      const deletePlayer = (address)=>{
+         //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
          client.query('DELETE FROM users WHERE address=$1',[address],(error) =>{
              if(error){
                  throw error;
