@@ -111,8 +111,8 @@ const getServices = async ()=>{
 }
 
 const getAdmittedServices = async (address)=>{
+    //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
     const results = await client.query('SELECT * FROM services WHERE address=$1',[address]);
-
     return results.rows;
 }
 
