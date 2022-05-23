@@ -621,15 +621,17 @@ export function registerPlayer(contract, account) {
 }
 
 export function registerCoach(contract, account) {
-
-
-    contract.methods.registerCoach(document.getElementById('caddress').value).send({from: account}).then(function (receipt) {
-        if (receipt) {
-
-            $.get('http://localhost:3300/registercoach?username=' + document.getElementById('cname').value + '&address=' + document.getElementById('caddress').value, {async:false});
-
-        }
-    });
+    let coachName = document.getElementById('cname').value;
+    let caddress = document.getElementById('caddress').value;
+    coachName = encodeURIComponent(coachName);
+    //TODO: Check for address being in the correct format. Issue #33: https://github.com/swisstackle/football_marketplace/issues/33
+    if(coachName.length > 0 && caddress.length > 0){
+        contract.methods.registerCoach(caddress).send({from: account}).then(function (receipt) {
+            if (receipt) {
+                $.get('http://localhost:3300/registercoach?username=' + coachName + '&address=' + caddress, {async:false});
+            }
+        });
+    }
 }
 
 export function requestRegisterService(contract, account) {
