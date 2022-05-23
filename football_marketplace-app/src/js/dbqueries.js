@@ -148,6 +148,8 @@ const getUsername = async (address)=>{
      }
 
 const deleteServiceRequest = (address,service_name)=>{
+    //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
+    service_name = encodeURIComponent(service_name);
     client.query('DELETE FROM service_requests WHERE address=$1 AND service_name=$2',[address,service_name],(error) =>{
         if(error){
             throw error;
