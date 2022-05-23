@@ -83,7 +83,7 @@ require('dotenv').config();
          //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
          name = encodeURIComponent(name);
          description = encodeURIComponent(description);
-         if(parseInt(price) > 0){
+         if(parseInt(price) > 0 && name.length > 0 && description.length){
              client.query('INSERT INTO service_requests(address, service_name, service_description, price) VALUES($1, $2, $3, $4)',[address, name, description, price],(error) =>{
                  if(error){
                      throw error;
