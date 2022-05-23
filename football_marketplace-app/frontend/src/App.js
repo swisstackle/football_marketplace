@@ -10,7 +10,7 @@ import RequestRegisterService from "./RequestRegisterService";
 import CoachesBackendDom from './CoachesBackendDom';
 import RegisterFormDom from './Register';
 import WalletDom from "./WalletDom";
-
+import MyServicesDom from "./MyServices";
 import {
     Navbar,
     Nav,
@@ -586,34 +586,10 @@ const NavDom = (props) => {
     );
 }
 
-const MyServicesDom = (props) => {
-    const [listItems, setListItems] = useState();
-
-    useEffect(() => {
-        async function load() {
-            let _services = await getServices(props.account);
 
 
-            const listItems = _services.map((service) =>
-                <li>{service['service_name'] + ' ' + service['service_description']}</li>
-            );
-            setListItems(listItems);
-        }
 
-        load();
-    }, []);
-
-    return (
-        <>
-            <h3 className='sub-header'>Your services</h3>
-            <ul>{listItems}</ul>
-        </>
-
-    );
-}
-
-
-async function getServices(account) {
+export async function getServices(account) {
     let services = await $.get("getAdmittedServices?address=" + account);
 
     return services;
