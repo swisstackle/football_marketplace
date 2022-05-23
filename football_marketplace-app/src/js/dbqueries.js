@@ -138,6 +138,8 @@ const getUsername = async (address)=>{
 }
 
         const registerCoach = (address, name)=>{
+         name = encodeURIComponent(name);
+            //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
             client.query('INSERT INTO coaches(address, name) VALUES($1, $2)',[address, name],(error) =>{
                 if(error){
                     throw error;
