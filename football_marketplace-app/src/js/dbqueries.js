@@ -45,7 +45,9 @@ require('dotenv').config();
          })
      }
      const serviceDone= (_servicename, _address)=>{
-             client.query('DELETE FROM bought_services WHERE servicename=$1 AND address=$2',[_servicename, _address],(error) =>{
+         _servicename = encodeURIComponent(_servicename);
+         //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
+         client.query('DELETE FROM bought_services WHERE servicename=$1 AND address=$2',[_servicename, _address],(error) =>{
              if(error){
                  throw error;
              }
