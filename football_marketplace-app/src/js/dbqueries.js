@@ -172,11 +172,14 @@ const deleteServiceRequest = (address,service_name)=>{
 const deleteService = (address, name)=>{
     //TODO: Check if address does not contain malicious code https://github.com/swisstackle/football_marketplace/issues/34
     name = encodeURIComponent(name);
-    client.query('DELETE FROM services WHERE service_name=$1 AND address=$2',[name, address],(error) =>{
-        if(error){
-            throw error;
-        }
-    })
+    if(name.length){
+        client.query('DELETE FROM services WHERE service_name=$1 AND address=$2',[name, address],(error) =>{
+            if(error){
+                throw error;
+            }
+        })
+    }
+
 }
 
 
