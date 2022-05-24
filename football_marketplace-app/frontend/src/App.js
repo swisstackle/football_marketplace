@@ -641,20 +641,21 @@ export function requestRegisterService(contract, account) {
     servicename = encodeURIComponent(servicename);
     description = encodeURIComponent(description);
     price = encodeURIComponent(price);
-    if(servicename.length > 0 && description.length > 0 && parseInt(price) > 0)
-    contract.methods.isRegistered(account).call().then(function (isReg) {
-        if (!isReg) {
-            alert("You are not registred, you can't register a service.");
-            return;
-        }
-        $.get('http://localhost:3300/requestRegisterService?name=' + servicename+ '&description=' + description + '&address=' + account + '&price=' + price, {async:false});
+    if(servicename.length > 0 && description.length > 0 && parseInt(price) > 0) {
+        contract.methods.isRegistered(account).call().then(function (isReg) {
+            if (!isReg) {
+                alert("You are not registred, you can't register a service.");
+                return;
+            }
+            $.get('http://localhost:3300/requestRegisterService?name=' + servicename + '&description=' + description + '&address=' + account + '&price=' + price, {async: false});
 
-        $('#servicename').val('');
-        $('#servicedescription').val('');
-        $('#price').val('');
-        alert("Successfully created service.")
-        //check if get request succesful
-    });
+            $('#servicename').val('');
+            $('#servicedescription').val('');
+            $('#price').val('');
+            alert("Successfully created service.")
+            //check if get request succesful
+        });
+    }
 }
 
 
