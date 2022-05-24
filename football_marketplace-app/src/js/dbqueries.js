@@ -15,7 +15,8 @@ require('dotenv').config();
             port: process.env.PORT,
             user: process.env.USER,
             password: process.env.PASSWORD,
-            database: process.env.MYDATABASE
+            database: process.env.MYDATABASE,
+            ssl: { rejectUnauthorized: false } // for heroku, deactivating certificate check. Suffice for prototype deploying.
         });
 
         await client.connect();
