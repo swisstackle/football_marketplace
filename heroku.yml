@@ -1,0 +1,4 @@
+build:
+  docker:
+    football_marketplace: ./Dockerfile
+    reactjs: ./football_marketplace-app/frontend/Dockerfile
