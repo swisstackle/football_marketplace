@@ -15,8 +15,7 @@ require('dotenv').config();
          console.log("This is database url: "+ process.env.DATABASE_URL);
          //dburl = 'postgres://qmeltfspuxumos:bc2371b074b5ce656292c41168f6e2eb5c73fe489a45fda95a31364db2129dae@ec2-54-165-184-219.compute-1.amazonaws.com:5432/d75n3sfjablrkg';
           client = new Client({
-              dburl,
-              ssl: { rejectUnauthorized: false } // for heroku, deactivating certificate check. Suffice for prototype deploying.
+              dburl
           });
         // client = new Client({
         //     host: process.env.HOST,
