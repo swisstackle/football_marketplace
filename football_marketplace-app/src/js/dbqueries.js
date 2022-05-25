@@ -1,6 +1,6 @@
 const {Client} = require("pg");
 require('dotenv').config();
-    var client;
+    let client;
 
      async function connect(){
         const {Client} = require('pg');
@@ -11,13 +11,15 @@ require('dotenv').config();
          console.log("Password: "+process.env.PASSWORD);
          console.log("Database: "+process.env.MYDATABASE);
          //for heroku:
-         let dburl = process.env.DATABASE_URL;
-         console.log("This is database url: "+ process.env.DATABASE_URL);
+
+
          //dburl = 'postgres://qmeltfspuxumos:bc2371b074b5ce656292c41168f6e2eb5c73fe489a45fda95a31364db2129dae@ec2-54-165-184-219.compute-1.amazonaws.com:5432/d75n3sfjablrkg';
-          client = new Client({
-              dburl,
-              ssl:true
-          });
+         client = new Client({
+             connectionString: process.env.DATABASE_URL,
+             ssl: {
+                 rejectUnauthorized: false
+             }
+         });
         // client = new Client({
         //     host: process.env.HOST,
         //     port: process.env.PORT,
@@ -28,8 +30,7 @@ require('dotenv').config();
         // });
 
         await client.connect();
-         const t = test();
-         console.log("Test variable:"+t);
+
      }
      async function test(){
          const res = await client.query('SELECT NOW();');
