@@ -1,7 +1,7 @@
 build:
   docker:
     football_marketplace: ./Dockerfile
-    reactjs: ./football_marketplace-app/frontend/Dockerfile
+    web: ./football_marketplace-app/frontend/Dockerfile
 run:
   football_marketplace: npm start
   web: npm start
