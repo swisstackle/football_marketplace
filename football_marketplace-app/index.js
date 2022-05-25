@@ -2,26 +2,32 @@ const db = require('./src/js/dbqueries');
 const fs = require('fs');
 const connector = db.connectV();
 
-var express = require('express')
-var cors = require('cors')
-var app = express()
-app.use(cors())
+var express = require('express');
+var cors = require('cors');
+var app = express();
+app.use(cors());
 const port = 3300 || process.env.PORT;
 app.use(express.static('src'));
 app.listen(port, function () {
     console.log('CORS-enabled web server listening on port 3300')
 });
+app.get('/getAdmittedServices', async function(req, res){
+    console.log(req.query.address);
+    const results = await db.getAdmittedServices(req.query.address);
 
-// if(process.env.NODE_ENV === 'production') {
-//     app.use(express.static(path.join(__dirname, 'frontend/build')));
-//     app.get('*', (req, res) => {    res.sendFile(path.join(__dirname + '/frontend/build/index.html'));  });
-//     console.log("Production");
-// }else{
-//     app.use(express.static(path.join(__dirname, 'frontend/public')));
-//     app.get('*', (req, res) => {  res.sendFile(path.join(__dirname+'/frontend/public/index.html'));});
-//     console.log(process.env.NODE_ENV);
-//     console.log("Dev");
-// }
+    res.send(results);
+});
+
+app.get('/getServiceRequests', async function(req, res){
+
+    const results = await db.getServices();
+
+    res.send(results);
+});
+app.get('/getallservices', async function(req, res){
+    const results = await db.getAllServices();
+    res.send(results);
+});
 
 app.get('/registeruser', function(req, res){
     console.log("Registering user "+req.query.username+" with address "+req.query.address);
@@ -53,19 +59,7 @@ app.get('/admitservice', async function(req, res){
     res.send("Success");
 });
 
-app.get('/getAdmittedServices', async function(req, res){
-    console.log(req.query.address);
-    const results = await db.getAdmittedServices(req.query.address);
 
-    res.send(results);
-});
-
-app.get('/getServiceRequests', async function(req, res){
-
-    const results = await db.getServices();
-
-    res.send(results);
-});
 
 app.get('/deleteservice', function(req, res){
     console.log(req.query.address +" deleting service");
@@ -104,7 +98,3 @@ app.get('/servicedone', function(req, res){
     res.send("Success");
 });
 
-app.get('/getallservices', async function(req, res){
-    const results = await db.getAllServices();
-    res.send(results);
-});
