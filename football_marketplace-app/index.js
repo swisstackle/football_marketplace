@@ -1,6 +1,6 @@
 const db = require('./src/js/dbqueries');
 const fs = require('fs');
-const connector = db.connectV();
+const connector = await db.connectV();
 
 
 var express = require('express')
