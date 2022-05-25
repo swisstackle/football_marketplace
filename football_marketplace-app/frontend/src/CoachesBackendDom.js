@@ -24,7 +24,8 @@ const CoachesBackendDomInternal = (props) => {
     useEffect(() => {
         async function load() {
             const _requests = await getServiceRequests();
-
+            console.log("Debug Log: ");
+            console.table(_requests);
             const listItems = _requests.map((service) =>
                 <li>{service['service_name'] + ' ' + service['service_description'] + ': '} {<a href={"#"}
                                                                                                 onClick={() => admitService(service['address'], service['service_name'], service['service_description'], service['price'])}
