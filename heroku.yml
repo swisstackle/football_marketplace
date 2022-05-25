@@ -4,4 +4,4 @@ build:
     reactjs: ./football_marketplace-app/frontend/Dockerfile
 run:
   football_marketplace: npm start
-  reactjs: cd ./football_marketplace-app/frontend/Dockerfile && npm start
+  reactjs: cd ./football_marketplace-app/frontend && npm start
