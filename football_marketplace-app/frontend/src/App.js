@@ -500,6 +500,7 @@ var abi = JSON.parse('[\n' +
 
 
 function App() {
+
     const [contract, setContract] = useState();
     const [account, setAccount] = useState();
     const [web3Obj, setWeb3Obj] = useState();
@@ -512,17 +513,19 @@ function App() {
             setWeb3Obj(web3);
             const accounts = await web3.eth.requestAccounts();
             setAccount(accounts[0]);
-            $.get("getcontractaddress")
-                .done(function (data) {
-
-
-                    const _contract = new web3.eth.Contract(abi, data);
-                    _contract.address = data;
-                    setContract(_contract);
-
-
-                });
-
+            // $.get("getcontractaddress")
+            //     .done(function (data) {
+            //
+            //
+            //         const _contract = new web3.eth.Contract(abi, data);
+            //         _contract.address = data;
+            //         setContract(_contract);
+            //
+            //
+            //     });
+            const _contract = new web3.eth.Contract(abi, "0x04Bb58BA81479cB40a078201CE38daBe8a27F272");
+            _contract.address = "0x04Bb58BA81479cB40a078201CE38daBe8a27F272";
+            setContract(_contract);
 
         }
 

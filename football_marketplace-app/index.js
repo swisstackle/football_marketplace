@@ -7,11 +7,22 @@ var express = require('express')
 var cors = require('cors')
 var app = express()
 app.use(cors())
-
+const port = 3300 || process.env.PORT;
 app.use(express.static('src'));
-app.listen('3300', function () {
+app.listen(port, function () {
     console.log('CORS-enabled web server listening on port 3300')
 });
+
+// if(process.env.NODE_ENV === 'production') {
+//     app.use(express.static(path.join(__dirname, 'frontend/build')));
+//     app.get('*', (req, res) => {    res.sendFile(path.join(__dirname + '/frontend/build/index.html'));  });
+//     console.log("Production");
+// }else{
+//     app.use(express.static(path.join(__dirname, 'frontend/public')));
+//     app.get('*', (req, res) => {  res.sendFile(path.join(__dirname+'/frontend/public/index.html'));});
+//     console.log(process.env.NODE_ENV);
+//     console.log("Dev");
+// }
 
 app.get('/registeruser', function(req, res){
     console.log("Registering user "+req.query.username+" with address "+req.query.address);
