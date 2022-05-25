@@ -1,7 +1,7 @@
 const db = require('./src/js/dbqueries');
 const fs = require('fs');
 const connector = db.connectV();
-
+console.trace('trace connector');
 
 // var express = require('express')
 // var cors = require('cors')
