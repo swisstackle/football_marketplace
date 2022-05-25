@@ -28,7 +28,8 @@ require('dotenv').config();
         // });
 
         await client.connect();
-
+         const t = test();
+         console.log("Test variable:"+t);
      }
      async function test(){
          const res = await client.query('SELECT NOW();');

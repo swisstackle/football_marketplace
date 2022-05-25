@@ -1,8 +1,7 @@
 const db = require('./src/js/dbqueries');
 const fs = require('fs');
 const connector = db.connectV();
-const t = db.test();
-console.log("Test variable:"+t);
+
 
 // var express = require('express')
 // var cors = require('cors')
