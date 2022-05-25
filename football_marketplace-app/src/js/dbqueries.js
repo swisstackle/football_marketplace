@@ -4,12 +4,12 @@ require('dotenv').config();
 
      async function connect(){
         const {Client} = require('pg');
-         // console.log("Database connection started with:");
-         // console.log("Host: "+process.env.HOST);
-         // console.log("User: "+process.env.USER);
-         // console.log("Port: "+process.env.PORT);
-         // console.log("Password: "+process.env.PASSWORD);
-         // console.log("Database: "+process.env.MYDATABASE);
+         console.log("Database connection started with:");
+         console.log("Host: "+process.env.HOST);
+         console.log("User: "+process.env.USER);
+         console.log("Port: "+process.env.PORT);
+         console.log("Password: "+process.env.PASSWORD);
+         console.log("Database: "+process.env.MYDATABASE);
          //for heroku:
          let dburl = process.env.DATABASE_URL;
          console.log("This is database url: "+ process.env.DATABASE_URL);
@@ -213,7 +213,8 @@ module.exports = {
     getAdmittedServices,
     buyService,
     serviceDone,
-    getAllServices
+    getAllServices,
+    test
 }
 
 
