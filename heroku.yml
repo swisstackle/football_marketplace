@@ -3,5 +3,5 @@ build:
     football_marketplace: ./Dockerfile
     reactjs: ./football_marketplace-app/frontend/Dockerfile
 run:
-  football_marketplace: npm start
-  reactjs: npm start
+  football_marketplace: npm install && npm start
+  reactjs: npm install && npm start
