@@ -19,9 +19,9 @@ app.get('/getAdmittedServices', async function(req, res){
 });
 
 app.get('/getServiceRequests', async function(req, res){
-
+    console.log("Request for services");
     const results = await db.getServices();
-
+    console.table(results);
     res.send(results);
 });
 app.get('/getallservices', async function(req, res){
