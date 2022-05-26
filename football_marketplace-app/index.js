@@ -11,6 +11,10 @@ app.use(express.static('src'));
 app.listen(port, function () {
     console.log('CORS-enabled web server listening on port 3300')
 });
+
+app.get('/', async function(req, res){
+    res.send("basis");
+});
 app.get('/getAdmittedServices', async function(req, res){
     console.log(req.query.address);
     const results = await db.getAdmittedServices(req.query.address);
@@ -97,6 +101,4 @@ app.get('/servicedone', function(req, res){
     db.serviceDone(req.query.servicename, req.query.address);
     res.send("Success");
 });
-app.get('/', async function(req, res){
-    res.send("basis");
-});
+
