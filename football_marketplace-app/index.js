@@ -97,6 +97,6 @@ app.get('/servicedone', function(req, res){
     db.serviceDone(req.query.servicename, req.query.address);
     res.send("Success");
 });
-app.get('*', async function(req, res){
+app.get('/', async function(req, res){
     res.send("basis");
 });
