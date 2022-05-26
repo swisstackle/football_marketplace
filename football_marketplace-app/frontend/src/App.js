@@ -599,7 +599,7 @@ export async function getServices(account) {
 }
 
 export async function getServiceRequests() {
-    let services = await $.get("getServiceRequests");
+    let services = await $.get("http://bullsmarketplace.herokuapp.com/getServiceRequests");
 
     return services;
 }

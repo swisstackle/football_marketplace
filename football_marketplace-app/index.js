@@ -5,7 +5,7 @@ const connector = db.connectV();
 var express = require('express');
 var cors = require('cors');
 var app = express();
-//app.use(cors());
+app.use(cors());
 const port = 3300 || process.env.PORT;
 app.use(express.static('src'));
 app.listen(port, function () {
