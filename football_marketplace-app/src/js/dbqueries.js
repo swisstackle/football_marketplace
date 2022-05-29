@@ -10,9 +10,6 @@ require('dotenv').config();
          console.log("Password: "+process.env.PASSWORD);
          console.log("Database: "+process.env.MYDATABASE);
          //for heroku:
-
-
-         //dburl = 'postgres://qmeltfspuxumos:bc2371b074b5ce656292c41168f6e2eb5c73fe489a45fda95a31364db2129dae@ec2-54-165-184-219.compute-1.amazonaws.com:5432/d75n3sfjablrkg';
          client = new Client({
              connectionString: process.env.DATABASE_URL,
              ssl: {
