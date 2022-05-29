@@ -6,7 +6,7 @@ var express = require('express');
 var cors = require('cors');
 var app = express();
 app.use(cors());
-const port = 80 || process.env.PORT;
+const port = 81 || process.env.PORT;
 app.use(express.static('src'));
 app.listen(port, function () {
     console.log('CORS-enabled web server listening on port 3300')

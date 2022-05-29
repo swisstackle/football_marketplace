@@ -3,7 +3,6 @@ require('dotenv').config();
     let client;
 
      async function connect(){
-        const {Client} = require('pg');
          console.log("Database connection started with:");
          console.log("Host: "+process.env.HOST);
          console.log("User: "+process.env.USER);
@@ -20,15 +19,6 @@ require('dotenv').config();
                  rejectUnauthorized: false
              }
          });
-        // client = new Client({
-        //     host: process.env.HOST,
-        //     port: process.env.PORT,
-        //     user: process.env.USER,
-        //     password: process.env.PASSWORD,
-        //     database: process.env.MYDATABASE,
-        //     ssl: { rejectUnauthorized: false } // for heroku, deactivating certificate check. Suffice for prototype deploying.
-        // });
-
         await client.connect();
 
      }
