@@ -1,5 +1,6 @@
 const db = require('./src/js/dbqueries');
 const fs = require('fs');
+const path = require('path');
 const connector = db.connectV();
 
 var express = require('express');
@@ -103,6 +104,6 @@ app.get('/servicedone', function(req, res){
 
 app.get('/', async function(req, res){
     res.sendFile(
-        path.join(__dirname, "/frontend/build/index.html")
+        fs.jo(__dirname, "/frontend/build/index.html")
     );
 });
