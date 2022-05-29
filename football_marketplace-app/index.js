@@ -104,6 +104,6 @@ app.get('/servicedone', function(req, res){
 
 app.get('/', async function(req, res){
     res.sendFile(
-        fs.jo(__dirname, "/frontend/build/index.html")
+        path.jo(__dirname, "/frontend/build/index.html")
     );
 });
