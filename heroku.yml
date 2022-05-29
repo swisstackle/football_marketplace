@@ -3,5 +3,5 @@ build:
     web: ./Dockerfile
     #web: ./football_marketplace-app/frontend/Dockerfile
 run:
-  web: sh -c 'cd football_marketplace-app && npm install && node index.js'
+  web: sh -c 'cd football_marketplace-app && npm install && cd frontend && npm install && cd ../ && node index.js'
   #web: sh -c 'npm install'
