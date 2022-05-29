@@ -14,7 +14,7 @@ app.listen(port, function () {
 });
 
 app.get('/', async function(req, res){
-    res.send("basis");
+    res.sendFile("./frontend/build/index.html");
 });
 app.get('/getAdmittedServices', async function(req, res){
     console.log(req.query.address);
