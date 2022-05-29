@@ -13,9 +13,7 @@ app.listen(port, function () {
     console.log('CORS-enabled web server listening on port 3300')
 });
 
-app.get('/', async function(req, res){
-    res.sendFile("./frontend/build/index.html");
-});
+
 app.get('/getAdmittedServices', async function(req, res){
     console.log(req.query.address);
     const results = await db.getAdmittedServices(req.query.address);
@@ -103,3 +101,8 @@ app.get('/servicedone', function(req, res){
     res.send("Success");
 });
 
+app.get('*', async function(req, res){
+    res.sendFile(
+        path.join(__dirname, "/frontend/build/index.html")
+    );
+});

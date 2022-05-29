@@ -4,4 +4,4 @@ build:
     web: ./football_marketplace-app/frontend/Dockerfile
 run:
   server: sh -c 'cd football_marketplace-app && npm install && node index.js'
-  web: sh -c 'npm install && npm start'
+  web: sh -c 'npm install'
