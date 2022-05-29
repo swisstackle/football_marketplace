@@ -7,6 +7,8 @@ var express = require('express');
 var cors = require('cors');
 var app = express();
 app.use(cors());
+app.use(express.json());
+app.use( express.static(path.join(__dirname, "/frontend/build")))
 const port = process.env.PORT;
 console.log(port);
 app.use(express.static('src'));
