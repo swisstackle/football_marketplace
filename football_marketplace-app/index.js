@@ -103,6 +103,7 @@ app.get('/servicedone', function(req, res){
 });
 
 app.get('/', async function(req, res){
+    console.log("Arrived");
     res.sendFile(
         path.join(__dirname, "/frontend/build/index.html")
     );
