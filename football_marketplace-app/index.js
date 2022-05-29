@@ -101,7 +101,7 @@ app.get('/servicedone', function(req, res){
     res.send("Success");
 });
 
-app.get('*', async function(req, res){
+app.get('/', async function(req, res){
     res.sendFile(
         path.join(__dirname, "/frontend/build/index.html")
     );
