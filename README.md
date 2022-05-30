@@ -1,5 +1,5 @@
 # Football Marketplace
-Ethereum Blockchain Dapp that aims to improve teamwork within an organization.
+Ethereum Blockchain Dapp that aims to force team members to engage in teamwork within an organization.
 
 Every participant on the blockchain can create, sell and buy services from others (coworkers or teammates).<br>
 The exchange of money will happen through an ERC20 token ("BTT", "Bulls Team Token").<br>
